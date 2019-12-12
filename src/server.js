@@ -28,7 +28,7 @@ export default function() {
         socket.on("printFromClient", (filePath) => {
             console.log(filePath)
             printFile(filePath).then(() => {
-                console.log("file printed")
+                // action when printed file action was success
             })
         })
     })
