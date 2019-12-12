@@ -22,7 +22,7 @@ function onPrint() {
         if(p5Canvas !== null) {
             // const canvasSaved = saveCanvas(p5Canvas, 'myCanvas', 'jpg');
 
-            const dataUri = p5Canvas.canvas.toDataURL()
+            const dataUri = p5Canvas.canvas.toDataURL("image/png")
 
             socket.emit("printFromClient", dataUri)
             console.info(`dataUri of canvas sending to server: ${dataUri}`)
