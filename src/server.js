@@ -5,6 +5,7 @@ const PORT_CLIENT = 8080
 import express from "express"
 import nodeHttp from "http"
 import socketIo from "socket.io"
+import {saveImageFromDataUri} from "./saveImageFromDataUri"
 
 export default function() {
 
@@ -25,11 +26,14 @@ export default function() {
     io.on("connection", (socket) => {
         console.log("new connection")
 
-        socket.on("printFromClient", (filePath) => {
-            console.log(filePath)
-            printFile(filePath).then(() => {
-                // action when printed file action was success
-            })
+        socket.on("printFromClient", (dataUri) => {
+            console.log(dataUri)
+
+            saveImageFromDataUri(dataUri, '/documents/')
+
+            // printFile(dataUri).then(() => {
+            //     // action when printed file action was success
+            // })
         })
     })
 }

@@ -10,22 +10,11 @@
 <body>
 print sample
 
-<button onclick="print()">print!</button>
+<button onclick="onPrint()">print!</button>
 
+<script src="public/libraries/p5.min.js"></script>
 <!--suppress HtmlUnknownTarget -->
 <script src="/socket.io/socket.io.js"></script>
 <script src="public/script.js"></script>
-<script>
-    var socket = io();
-
-    /**
-     * @var {Object} data - data to send on node server
-     * */
-    var filePath = "./documents/document.bmp"
-    function print() {
-        socket.emit("printFromClient", filePath)
-        console.info("print clicked")
-    }
-</script>
 </body>
 </html>

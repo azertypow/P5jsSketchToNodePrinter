@@ -145,6 +145,28 @@ async function _default(documentPath) {
     console.error(reason);
   });
 }
+},{}],"saveImageFromDataUri.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.saveImageFromDataUri = saveImageFromDataUri;
+
+var _fs = _interopRequireDefault(require("fs"));
+
+var _sys = _interopRequireDefault(require("sys"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function saveImageFromDataUri(dataUri, pathOfDirectory = "/") {
+  // strip off the data: url prefix to get just the base64-encoded bytes
+  const base64Data = dataUri.replace(/^data:image\/\w+;base64,/, "");
+
+  _fs.default.writeFile(__dirname + pathOfDirectory + "out.png", base64Data, 'base64', err => {
+    console.log(err);
+  });
+}
 },{}],"server.js":[function(require,module,exports) {
 "use strict";
 
@@ -160,6 +182,8 @@ var _express = _interopRequireDefault(require("express"));
 var _http = _interopRequireDefault(require("http"));
 
 var _socket = _interopRequireDefault(require("socket.io"));
+
+var _saveImageFromDataUri = require("./saveImageFromDataUri");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -180,14 +204,15 @@ function _default() {
   });
   io.on("connection", socket => {
     console.log("new connection");
-    socket.on("printFromClient", filePath => {
-      console.log(filePath);
-      (0, _printFile.default)(filePath).then(() => {// action when printed file action was success
-      });
+    socket.on("printFromClient", dataUri => {
+      console.log(dataUri);
+      (0, _saveImageFromDataUri.saveImageFromDataUri)(dataUri, '/documents/'); // printFile(dataUri).then(() => {
+      //     // action when printed file action was success
+      // })
     });
   });
 }
-},{"./printFile":"printFile.js"}],"main.js":[function(require,module,exports) {
+},{"./printFile":"printFile.js","./saveImageFromDataUri":"saveImageFromDataUri.js"}],"main.js":[function(require,module,exports) {
 "use strict";
 
 var _server = _interopRequireDefault(require("./server"));
