@@ -182,8 +182,7 @@ function _default() {
     console.log("new connection");
     socket.on("printFromClient", filePath => {
       console.log(filePath);
-      (0, _printFile.default)(filePath).then(() => {
-        console.log("file printed");
+      (0, _printFile.default)(filePath).then(() => {// action when printed file action was success
       });
     });
   });
